@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# ┌────────────────────────────────────────────┐
+# │           kali-cleanup v1.0               │
+# │   System hygiene and cleanup wrapper      │
+# └────────────────────────────────────────────┘
+
+set -e
+
+LOGFILE="/var/log/kali-cleanup.log"
+DRY_RUN=false
+
+# ── Parse flags ──────────────────────────────
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        --dry-run) DRY_RUN=true ;;
+        --log) LOG=true ;;
+        --help)
+            echo "Usage: kali-cleanup [--dry-run] [--log]"
+            exit 0
+            ;;
+        *) echo "Unknown option: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+# ── Define cleanup steps ─────────────────────
+cleanup_steps=(
+    "apt autoremove -y"
+    "apt clean"
+    "rm -rf /var/cache/apt/*"
+    "rm -rf /tmp/*"
+)
+
+# ── Execute or simulate ──────────────────────
+echo "🔧 Starting Kali cleanup..."
+for step in "${cleanup_steps[@]}"; do
+    if $DRY_RUN; then
+        echo "[DRY-RUN] Would execute: $step"
+    else
+        echo "✅ Executing: $step"
+        eval "$step"
+    fi
+done
+
+# ── Optional logging ─────────────────────────
+if [[ "$LOG" == true && "$DRY_RUN" == false ]]; then
+    echo "📝 Logging to $LOGFILE"
+    {
+        echo "=== kali-cleanup ==="
+        date
+        for step in "${cleanup_steps[@]}"; do echo "$step"; done
+        echo "===================="
+    } >> "$LOGFILE"
+fi
+
+echo "🎉 Cleanup complete."
