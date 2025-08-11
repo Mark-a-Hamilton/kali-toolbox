@@ -1,0 +1,74 @@
+#!/bin/bash
+
+set -e
+
+LOG=false
+DRY_RUN=false
+HASHMAP=false
+NETWORK=false
+
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        --dry-run) DRY_RUN=true ;;
+        --log) LOG=true ;;
+        --hashmap) HASHMAP=true ;;
+        --network) NETWORK=true ;;
+        --help)
+            echo "Usage: kali-diagnostics [--dry-run] [--log] [--hashmap] [--network]"
+            exit 0 ;;
+        *) echo "Unknown option: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+diagnostics=(
+    "uptime"
+    "df -h"
+    "free -m"
+    "top -b -n 1 | head -20"
+    "systemctl --failed"
+    "dmesg | tail -20"
+)
+
+if $NETWORK; then
+    diagnostics+=(
+        "ip a"
+        "ip r"
+        "ss -tuln"
+        "cat /etc/resolv.conf"
+        "systemctl status NetworkManager"
+    )
+fi
+
+echo "🔍 Running system diagnostics..."
+for check in "${diagnostics[@]}"; do
+    if $DRY_RUN; then
+        echo "[DRY-RUN] Would run: $check"
+    else
+        echo "📌 Running: $check"
+        echo "▶ $check"
+        eval "$check"
+        echo ""
+    fi
+done
+
+if $LOG && ! $DRY_RUN; then
+    echo "📝 Logging to /var/log/kali-diagnostics.log"
+    {
+        echo "=== kali-diagnostics ==="
+        date
+        for check in "${diagnostics[@]}"; do
+            echo "▶ $check"
+            eval "$check"
+            echo ""
+        done
+        echo "========================"
+    } >> /var/log/kali-diagnostics.log
+fi
+
+if $HASHMAP; then
+    sha256sum "$0" > .hashmap/kali-diagnostics.hash
+    date > .hashmap/kali-diagnostics.timestamp
+fi
+
+echo "✅ Diagnostics complete."
