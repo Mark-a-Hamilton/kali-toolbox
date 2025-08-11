@@ -12,7 +12,7 @@ Scripts are located in the `scripts/` folder and are intended for installation t
 |-------------------|----------------------------------------------|-----------------------------|
 | `kali-update`     | Updates system packages and refreshes repos  | [`docs/kali-update.md`](docs/kali-update.md)  |
 | `kali-cleanup`    | Removes orphaned packages and temp files     | [`docs/kali-cleanup.md`](docs/kali-cleanup.md)  |
-| `kali-diagnostics`| Runs basic system health checks              | [`docs/kali-diagnostics.md`](docs/kali-diagnostics.md) *(stub)* |
+| `kali-diagnostics`| Runs basic system health checks              | [`docs/kali-diagnostics.md`](docs/kali-diagnostics.md)  |
 
 > 📌 *More scripts will be added as the toolbox evolves. Each should include internal usage documentation and logging behavior.*
 
