@@ -83,4 +83,5 @@ Includes:
 
 ## 📢 Disclaimer
 
-This script wraps existing system commands and is intended solely for diagnostics. It does **not** perform any 
+This script wraps existing system commands and is intended solely for system hygiene. It does **not** perform any security scanning or enumeration. Use responsibly and only in environments where you have explicit permission.
+enumeration, scanning, or offensive actions. Use responsibly and only in environments where you have explicit permission.
