@@ -26,7 +26,7 @@ This project is scoped exclusively for:
 
 It does **not** include reconnaissance, exploitation, or offensive tooling. All functionality is designed to be transparent, auditable, and ethically bounded.
 
-For a full overview of available scripts and documentation, see [`index.md`](docs/index.md).
+For a full overview of available scripts and documentation, see [`index.md`](index.md).
 
 ---
 
