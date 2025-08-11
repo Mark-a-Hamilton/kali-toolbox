@@ -1,18 +1,16 @@
 # 🩺 kali-diagnostics
 
-The `kali-diagnostics` script provides a modular wrapper for system health checks. It runs a series of diagnostic commands to assess uptime, resource usage, service status, and kernel messages. Designed for audit-grade traceability, it supports dry-run simulation and optional logging.
+The `kali-diagnostics` script is a modular wrapper for basic system diagnostics in Kali Linux. It checks service status, network connectivity, and system health, with optional logging and hash-based traceability.
 
 ---
 
 ## 📦 Purpose
 
-This script helps users:
-- Monitor system health and performance
-- Identify failed services or resource bottlenecks
-- Capture diagnostic output for audit or support
-- Run checks safely with dry-run preview
-
-It is intended for passive diagnostics only and does **not** perform any enumeration or active scanning.
+This script provides quick visibility into system status by:
+- Checking key services
+- Validating network connectivity
+- Reporting uptime and resource usage
+- Logging actions and hashing for audit-grade traceability
 
 ---
 
@@ -24,7 +22,7 @@ It is intended for passive diagnostics only and does **not** perform any enumera
 kali-diagnostics
 ```
 
-Runs all checks and prints output to terminal.
+Runs all checks with no logging or simulation.
 
 ### Dry-run mode
 
@@ -32,7 +30,7 @@ Runs all checks and prints output to terminal.
 kali-diagnostics --dry-run
 ```
 
-Simulates each check without executing commands.
+Simulates each check without executing.
 
 ### With logging
 
@@ -40,82 +38,49 @@ Simulates each check without executing commands.
 kali-diagnostics --log
 ```
 
-Appends full output to `/var/log/kali-diagnostics.log`.
+Appends execution details to `/var/log/kali-diagnostics.log`.
 
-### Combined
+### With hash-based audit
 
 ```bash
-kali-diagnostics --dry-run --log
+kali-diagnostics --hashmap
 ```
 
-Simulates checks and logs the intended actions.
+Generates a SHA-256 hash of the script and logs the timestamp to `.hashmap/`.
 
 ---
 
 ## ⚙️ Parameters
 
-| Flag         | Description                                      |
-|--------------|--------------------------------------------------|
-| `--dry-run`  | Simulates diagnostic steps without executing     |
-| `--log`      | Logs output to `/var/log/kali-diagnostics.log`   |
-| `--help`     | Displays usage instructions                      |
+| Flag         | Description                                                  |
+|--------------|--------------------------------------------------------------|
+| `--dry-run`  | Simulates diagnostic steps without executing                 |
+| `--log`      | Logs actions to `/var/log/kali-diagnostics.log`              |
+| `--hashmap`  | Stores script hash and timestamp in `.hashmap/`              |
+| `--help`     | Displays usage instructions                                  |
 
 ---
 
-## 🔍 Checks Performed
+## 🔧 Checks Performed
 
-| Check Command              | Description                          |
-|---------------------------|--------------------------------------|
-| `uptime`                  | System uptime and load averages      |
-| `df -h`                   | Disk usage in human-readable format  |
-| `free -m`                 | Memory usage in megabytes            |
-| `top -b -n 1 | head -20`  | Snapshot of top processes            |
-| `systemctl --failed`      | List of failed services              |
-| `dmesg | tail -20`        | Recent kernel messages               |
+| Command                 | Description                          |
+|-------------------------|--------------------------------------|
+| `systemctl status`      | Checks service status                |
+| `ping -c 4 8.8.8.8`     | Validates external connectivity      |
+| `uptime`                | Reports system uptime                |
+| `free -h`               | Displays memory usage                |
 
 ---
 
 ## 📁 Output
 
-Output includes:
-- Timestamped execution summary
-- Results of each diagnostic check
-- Optional log file with full output
-
-Example log snippet:
-
-```
-=== kali-diagnostics ===
-2025-08-11 20:02:17
-▶ uptime
-  20:02:17 up 3 days,  4:12,  2 users,  load average: 0.15, 0.10, 0.05
-▶ df -h
-  Filesystem      Size  Used Avail Use% Mounted on
-  /dev/sda1        50G   20G   28G  42% /
-...
-========================
-```
-
----
-
-## 🔐 Audit Notes
-
-For traceability:
-- Hash the script using `sha256sum`
-- Log execution timestamps
-- Store logs in `.hashmap/` if audit mode is active
-
-Example:
-
-```bash
-sha256sum /usr/local/bin/kali-diagnostics > .hashmap/kali-diagnostics.hash
-date > .hashmap/kali-diagnostics.timestamp
-```
+Includes:
+- Confirmation of each check executed or simulated
+- Optional log file with timestamped actions
+- Optional `.hashmap/` entries for audit traceability
 
 ---
 
 ## 📢 Disclaimer
 
-This script performs passive system diagnostics only. It does **not** modify system state, perform recon, or interact with external services.
-
-Use responsibly and only on systems where you have explicit permission.
+This script wraps existing system commands and is intended solely for diagnostics. It does **not** perform any 
