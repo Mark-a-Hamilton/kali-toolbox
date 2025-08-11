@@ -1,20 +1,54 @@
 #!/bin/bash
 
-# Update package lists
-echo "Updating package lists..."
-sudo apt update -y
+set -e
 
-# Upgrade installed packages
-echo "Upgrading installed packages..."
-sudo apt upgrade -y
+LOG=false
+DRY_RUN=false
+HASHMAP=false
 
-# Full system upgrade (optional)
-echo "Running full system upgrade..."
-sudo apt full-upgrade -y
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        --dry-run) DRY_RUN=true ;;
+        --log) LOG=true ;;
+        --hashmap) HASHMAP=true ;;
+        --help)
+            echo "Usage: kali-update [--dry-run] [--log] [--hashmap]"
+            exit 0 ;;
+        *) echo "Unknown option: $1"; exit 1 ;;
+    esac
+    shift
+done
 
-# Clean up unnecessary packages
-echo "Cleaning up unused packages..."
-sudo apt autoremove -y
-sudo apt autoclean -y
+steps=(
+    "apt update"
+    "apt upgrade -y"
+    "apt autoremove -y"
+    "apt clean"
+)
 
-echo "System update complete!"
+echo "🔄 Starting Kali update..."
+for step in "${steps[@]}"; do
+    if $DRY_RUN; then
+        echo "[DRY-RUN] Would execute: $step"
+    else
+        echo "✅ Executing: $step"
+        eval "$step"
+    fi
+done
+
+if $LOG && ! $DRY_RUN; then
+    echo "📝 Logging to /var/log/kali-update.log"
+    {
+        echo "=== kali-update ==="
+        date
+        for step in "${steps[@]}"; do echo "$step"; done
+        echo "==================="
+    } >> /var/log/kali-update.log
+fi
+
+if $HASHMAP; then
+    sha256sum "$0" > .hashmap/kali-update.hash
+    date > .hashmap/kali-update.timestamp
+fi
+
+echo "🎉 Update complete."
