@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Update package lists
+echo "Updating package lists..."
+sudo apt update -y
+
+# Upgrade installed packages
+echo "Upgrading installed packages..."
+sudo apt upgrade -y
+
+# Full system upgrade (optional)
+echo "Running full system upgrade..."
+sudo apt full-upgrade -y
+
+# Clean up unnecessary packages
+echo "Cleaning up unused packages..."
+sudo apt autoremove -y
+sudo apt autoclean -y
+
+echo "System update complete!"
