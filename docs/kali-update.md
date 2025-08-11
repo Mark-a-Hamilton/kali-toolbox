@@ -1,6 +1,6 @@
 # 🔄 kali-update
 
-The `kali-update` script is a utility wrapper designed to streamline the process of updating a Kali Linux system. It consolidates standard package management commands into a single, auditable workflow, with optional logging and dry-run support.
+The `kali-update` script is a modular wrapper for updating a Kali Linux system. It consolidates standard package management commands into a single, auditable workflow, with support for dry-run simulation, logging, and hash-based traceability.
 
 ---
 
@@ -9,8 +9,8 @@ The `kali-update` script is a utility wrapper designed to streamline the process
 This script simplifies routine update tasks by:
 - Refreshing package lists
 - Upgrading installed packages
-- Cleaning up residual files
-- Logging execution for traceability
+- Removing unused packages and clearing cache
+- Logging actions and hashing for audit-grade traceability
 
 It is intended for system maintenance only and does **not** introduce any new security functionality.
 
@@ -18,72 +18,93 @@ It is intended for system maintenance only and does **not** introduce any new se
 
 ## 🚀 Usage
 
-### Basic execution
+### Basic update
 
 ```bash
 kali-update
 ```
 
-This will:
-1. Run `apt update` to refresh package lists
-2. Run `apt upgrade -y` to upgrade all packages
-3. Optionally run `apt autoremove` and `apt clean` to tidy up
+Runs all update steps with no logging or simulation.
 
-### With logging
-
-```bash
-kali-update | tee /var/log/kali-update.log
-```
-
-This captures output for audit purposes.
-
-### Dry-run mode *(if implemented)*
+### Dry-run mode
 
 ```bash
 kali-update --dry-run
 ```
 
-Simulates the update process without making changes.
+Simulates each step without making changes.
+
+### With logging
+
+```bash
+kali-update --log
+```
+
+Appends execution details to `/var/log/kali-update.log`.
+
+### With hash-based audit
+
+```bash
+kali-update --hashmap
+```
+
+Generates a SHA-256 hash of the script and logs the timestamp to `.hashmap/`.
+
+### Combined
+
+```bash
+kali-update --log --hashmap
+```
+
+Performs update, logs actions, and stores audit artifacts.
 
 ---
 
-## ⚙️ Dependencies
+## ⚙️ Parameters
 
-- `apt`
-- `dpkg`
-- Bash shell (`#!/bin/bash`)
+| Flag         | Description                                                  |
+|--------------|--------------------------------------------------------------|
+| `--dry-run`  | Simulates update steps without executing                     |
+| `--log`      | Logs actions to `/var/log/kali-update.log`                   |
+| `--hashmap`  | Stores script hash and timestamp in `.hashmap/`              |
+| `--help`     | Displays usage instructions                                  |
 
-Ensure the script is executable and installed to `/usr/local/bin`:
+---
 
-```bash
-sudo cp scripts/kali-update /usr/local/bin/
-sudo chmod +x /usr/local/bin/kali-update
-```
+## 🔧 Steps Performed
+
+| Command              | Description                          |
+|----------------------|--------------------------------------|
+| `apt update`         | Refreshes package lists              |
+| `apt upgrade -y`     | Upgrades installed packages          |
+| `apt autoremove -y`  | Removes orphaned packages            |
+| `apt clean`          | Clears package cache                 |
 
 ---
 
 ## 📁 Output
 
-Typical output includes:
-- Number of packages to upgrade
-- Summary of changes
-- Cleanup actions performed
+Output includes:
+- Confirmation of each step executed or simulated
+- Optional log file with timestamped actions
+- Optional `.hashmap/` entries for audit traceability
 
-If logging is enabled, output is saved to `/var/log/kali-update.log` or a user-defined path.
+Example log snippet:
 
----
+```
+=== kali-update ===
+2025-08-11 20:15:42
+apt update
+apt upgrade -y
+apt autoremove -y
+apt clean
+===================
+```
 
-## 🔐 Audit Notes
-
-For traceability:
-- Hash the script using `sha256sum`
-- Log execution timestamps
-- Store logs in `.hashmap/` if audit mode is active
-
-Example:
+Example audit entries:
 
 ```bash
-sha256sum /usr/local/bin/kali-update > .hashmap/kali-update.hash
+.sha256sum /usr/local/bin/kali-update > .hashmap/kali-update.hash
 date > .hashmap/kali-update.timestamp
 ```
 
