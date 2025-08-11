@@ -1,40 +1,38 @@
 #!/bin/bash
 
 # ┌────────────────────────────────────────────┐
-# │           kali-cleanup v1.0               │
-# │   System hygiene and cleanup wrapper      │
+# │           kali-cleanup v1.0                │
+# │   System hygiene and cleanup wrapper       │
 # └────────────────────────────────────────────┘
 
 set -e
 
-LOGFILE="/var/log/kali-cleanup.log"
+LOG=false
 DRY_RUN=false
+HASHMAP=false
 
-# ── Parse flags ──────────────────────────────
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
         --dry-run) DRY_RUN=true ;;
         --log) LOG=true ;;
+        --hashmap) HASHMAP=true ;;
         --help)
-            echo "Usage: kali-cleanup [--dry-run] [--log]"
-            exit 0
-            ;;
+            echo "Usage: kali-cleanup [--dry-run] [--log] [--hashmap]"
+            exit 0 ;;
         *) echo "Unknown option: $1"; exit 1 ;;
     esac
     shift
 done
 
-# ── Define cleanup steps ─────────────────────
-cleanup_steps=(
+steps=(
     "apt autoremove -y"
     "apt clean"
     "rm -rf /var/cache/apt/*"
     "rm -rf /tmp/*"
 )
 
-# ── Execute or simulate ──────────────────────
-echo "🔧 Starting Kali cleanup..."
-for step in "${cleanup_steps[@]}"; do
+echo "🧹 Starting Kali cleanup..."
+for step in "${steps[@]}"; do
     if $DRY_RUN; then
         echo "[DRY-RUN] Would execute: $step"
     else
@@ -43,15 +41,19 @@ for step in "${cleanup_steps[@]}"; do
     fi
 done
 
-# ── Optional logging ─────────────────────────
-if [[ "$LOG" == true && "$DRY_RUN" == false ]]; then
-    echo "📝 Logging to $LOGFILE"
+if $LOG && ! $DRY_RUN; then
+    echo "📝 Logging to /var/log/kali-cleanup.log"
     {
         echo "=== kali-cleanup ==="
         date
-        for step in "${cleanup_steps[@]}"; do echo "$step"; done
+        for step in "${steps[@]}"; do echo "$step"; done
         echo "===================="
-    } >> "$LOGFILE"
+    } >> /var/log/kali-cleanup.log
+fi
+
+if $HASHMAP; then
+    sha256sum "$0" > .hashmap/kali-cleanup.hash
+    date > .hashmap/kali-cleanup.timestamp
 fi
 
 echo "🎉 Cleanup complete."
