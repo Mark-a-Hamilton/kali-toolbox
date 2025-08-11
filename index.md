@@ -10,7 +10,7 @@ Scripts are located in the `scripts/` folder and are intended for installation t
 
 | Script Name       | Description                                  | Documentation Link         |
 |-------------------|----------------------------------------------|-----------------------------|
-| `kali-update`     | Updates system packages and refreshes repos  | [`docs/kali-update.md`](docs/kali-update.md) *(stub)* |
+| `kali-update`     | Updates system packages and refreshes repos  | [`docs/kali-update.md`](docs/kali-update.md)  |
 | `kali-cleanup`    | Removes orphaned packages and temp files     | [`docs/kali-cleanup.md`](docs/kali-cleanup.md) *(stub)* |
 | `kali-diagnostics`| Runs basic system health checks              | [`docs/kali-diagnostics.md`](docs/kali-diagnostics.md) *(stub)* |
 
