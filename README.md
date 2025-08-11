@@ -6,14 +6,27 @@
 
 ---
 
-## 📦 Purpose
+## 📖 Project Overview
 
-The goal of this project is to provide a centralized, auditable set of helper scripts that:
+Kali-toolbox provides a centralized, auditable set of helper scripts that:
 - Simplify common administrative tasks
 - Enhance operational hygiene
-- Maintain clarity and ethical boundaries in tooling
+- Maintain ethical clarity in tooling
 
-Scripts are designed to be installed in `/usr/local/bin` for global access across the system.
+Each script is designed to be globally accessible when installed to `/usr/local/bin`, and includes internal documentation for usage and logging.
+
+---
+
+## 🎯 Scope and Intended Use
+
+This project is scoped exclusively for:
+- **System maintenance** on Kali Linux
+- **Operational hygiene** (updates, diagnostics, cleanup)
+- **Wrapper logic** for existing system commands
+
+It does **not** include reconnaissance, exploitation, or offensive tooling. All functionality is designed to be transparent, auditable, and ethically bounded.
+
+For a full overview of available scripts and documentation, see [`index.md`](docs/index.md).
 
 ---
 
@@ -30,7 +43,7 @@ Scripts are designed to be installed in `/usr/local/bin` for global access acros
 
 ## 📜 License
 
-This project is licensed under the [MIT License](https://github.com/Mark-a-Hamilton/kali-toolbox/blob/main/LICENSE). You are free to use, modify, and distribute the code with proper attribution.
+This project is licensed under the [MIT License](https://github.com/Mark-a-Hamilton/kali-toolbox/blob/main/LICENSE).
 
 ---
 
@@ -44,12 +57,6 @@ sudo chmod +x /usr/local/bin/*
 ```
 
 Ensure each script includes a shebang (`#!/bin/bash`) and internal usage documentation.
-
----
-
-## 🧭 Navigation
-
-For a full overview of available scripts and documentation, see [`index.md`](docs/index.md).
 
 ---
 
