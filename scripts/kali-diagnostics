@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# ┌────────────────────────────────────────────┐
+# │        kali-diagnostics v1.0               │
+# │   System hygiene and cleanup wrapper       │
+# └────────────────────────────────────────────┘
+
 set -e
 
 LOG=false
