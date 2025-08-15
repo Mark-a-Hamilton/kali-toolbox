@@ -1,17 +1,12 @@
 #!/bin/bash
-
-# ┌──────────────────────────────────────────────────────────────────────────┐
-# │   File / Version : tool-bhl / live                                       │
-# │   Author : Mark Hamilton │ Co-Pilot AI assisted                          │
-# │   Script : Bloodhound Launcher                                           │
-# │   Package : toolbox                                                      │
-# │   Purpose :                                                              │
-# │     Start Neo4j and BloodHound with diagnostics and browser integration  │
-# └──────────────────────────────────────────────────────────────────────────┘
-
+# ┌────────────────────────────────────────────────────────────┐
+# │ File / Version : tool-bhl / live                           │
+# │ Author : Mark Hamilton │ Co-Pilot AI assisted              │
+# │ Script Purpose : Start Neo4j service & Bloodhound Launcher │
+# │ Package : toolbox                                          │
+# └────────────────────────────────────────────────────────────┘
 # Usage:
 #   tool-bhl [--dry-run] [--diagnose-only] [--no-browser] [--verbose]
-
 # Examples:
 #   tool-bhl --dry-run
 #   tool-bhl --diagnose-only
