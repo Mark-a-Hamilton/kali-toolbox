@@ -76,3 +76,10 @@ Generates a SHA-256 hash of the script and logs the timestamp to `.hashmap/`.
 ## 📢 Disclaimer
 
 This script wraps standard system commands for hygiene purposes only. It does **not** perform scanning, enumeration, or offensive actions. Use responsibly and only in environments where you have explicit permission.
+
+---
+
+🤖 AI Usage Disclosure
+This tool is part of a broader initiative to maintain ethical clarity in AI-assisted tooling. For details on how AI contributes to authorship, documentation, and modular design in this project, see the AI.md file in the root directory.
+
+---
