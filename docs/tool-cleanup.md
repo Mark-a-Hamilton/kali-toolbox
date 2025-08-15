@@ -80,6 +80,6 @@ This script wraps standard system commands for hygiene purposes only. It does **
 ---
 
 🤖 AI Usage Disclosure
-This tool is part of a broader initiative to maintain ethical clarity in AI-assisted tooling. For details on how AI contributes to authorship, documentation, and modular design in this project, see the [AI.md](../AI.MD) file in the root directory.
+This tool is part of a broader initiative to maintain ethical clarity in AI-assisted tooling. For details on how AI contributes to authorship, documentation, and modular design in this project, see the [AI.md](../AI.md) file in the root directory.
 
 ---
