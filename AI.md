@@ -17,4 +17,4 @@ All final decisions, ethical boundaries, and system architecture are authored by
 ## Linked Projects
 - [Recon-Suite](https://github.com/Mark-a-Hamilton/recon-suite)
 - [Kali-toolbox](https://github.com/Mark-a-Hamilton/kali-toolbox)
-- [CV Website](https://Mark-a-Hamilton)
+- [CV Website](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton)
