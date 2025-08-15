@@ -16,29 +16,47 @@
 #   (docs/tool-example.md).
 # End Help
 
-# tool-docgen — Generates Markdown documentation for tool-* scripts
-
 script="$1"
 toolname=$(basename "$script")
 output="~/Documents/$toolname.md"
 
-# Extract help block
-help_block=$(grep -E '^#' "$script" | sed 's/^# //')
+# Extract help block and parse key fields
+help_block=$(grep -E '^#' "$script" | sed 's/^# //' | tr -d '\r')
+brief_purpose=$(echo "$help_block" | grep 'Script Purpose' | cut -d':' -f2- | xargs)
+author=$(echo "$help_block" | grep 'Author' | cut -d':' -f2- | xargs)
+version=$(echo "$help_block" | grep 'File / Version' | cut -d':' -f2- | xargs)
 
-# Extract flags
-flags=$(grep -Eo '\-\-[a-zA-Z0-9\-]+' "$script" | sort -u)
+# Extract flags and infer basic descriptions
+flags=$(grep -Eo '--[a-zA-Z0-9\-]+' "$script" | sort -u)
+
+# Heuristic flag descriptions (fallback)
+describe_flag() {
+  case "$1" in
+    --dry-run) echo "Simulates execution without making changes." ;;
+    --log) echo "Enables logging of actions to a timestamped file." ;;
+    --hashmap) echo "Generates hash-based audit trace for traceability." ;;
+    *) echo "Custom flag. Description may vary." ;;
+  esac
+}
 
 # Start Markdown output
 cat <<EOF
 # 🛠️ $toolname
 
-$toolname is a modular utility for Kali Linux. It performs <brief-purpose> with optional dry-run, logging, and hash-based audit support, ensuring safe and traceable execution.
+$toolname is a modular utility for Kali Linux. It performs $brief_purpose with optional dry-run, logging, and hash-based audit support, ensuring safe and traceable execution.
 
 ---
 
 ## 📦 Purpose
 
-<expanded-purpose>
+$brief_purpose
+
+---
+
+## 👤 Author & Version
+
+- Author: $author
+- Version: $version
 
 ---
 
@@ -68,12 +86,12 @@ $toolname --hashmap
 
 ## ⚙️ Parameters
 
-| Flag         | Description                                      |
-|--------------|--------------------------------------------------|
+| Flag | Description |
+|------|-------------|
 EOF
 
 for flag in $flags; do
-    echo "| \`$flag\` | <description> |"
+  echo "| \`$flag\` | $(describe_flag "$flag") |"
 done
 
 cat <<EOF
@@ -82,9 +100,9 @@ cat <<EOF
 
 ## 🔧 Steps Performed
 
-| Command             | Description                        |
-|---------------------|------------------------------------|
-| <command>           | <description>                      |
+| Command | Description |
+|---------|-------------|
+| <command> | <description> |
 
 ---
 
@@ -99,6 +117,7 @@ cat <<EOF
 ## 🤖 AI & Ethics Disclosure
 
 This tool was co-authored with AI assistance. For full details on ethical integration, traceability, and responsible authorship, see [ethics_AI.md](https://mark-a-hamilton.github.io/main/ethics_AI.md).
+
 🔙 [Return to Kali-toolbox](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/kali-toolbox)
 
 ---
