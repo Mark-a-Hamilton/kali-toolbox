@@ -16,7 +16,7 @@
 # Description:
 #   Lists all available tools in the Kali Toolbox with version info.
 #   If a tool name is provided, displays its embedded help block.
-#   Parses help blocks using '# Usage:' to '# End Help' comment markers.
+#   Parses help blocks using (# Usage:) to (# End Help) comment markers.
 # End Help
 
 TOOL_DIR="/usr/local/bin"
