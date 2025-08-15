@@ -9,12 +9,11 @@
 # └─────────────────────────────────────────────────┘
 
 # Usage:
-#   tool-cleanup [--dry-run] [--verbose]
-#
+# tool-cleanup [--dry-run] [--verbose] [--log] [--hashmap]
+
 # Examples:
-#   tool-cleanup --dry-run
-#   tool-cleanup --verbose
-#
+# tool-cleanup --dry-run
+# tool-cleanup --log
 # End Help
 
 set -e
