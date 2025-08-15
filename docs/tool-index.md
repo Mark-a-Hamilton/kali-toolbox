@@ -57,6 +57,7 @@ Displays the embedded help block for `tool-diag`.
 
 ---
 
-## 🤖 AI & Ethics Usage Disclosure
+## 🤖 AI & Ethics Disclosure  
 
-This tool was co-authored with AI assistance. For full details on ethical integration, traceability, and responsible authorship, see [ethics_AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/ethics_AI.md).
+This tool was co-authored with AI assistance. For full details on ethical integration, traceability, and responsible authorship, see [ethics_AI.md]([https://mark-a-hamilton.github.io/main/ethics_AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/ethics_AI.md)).  
+🔙 [Return to Kali-toolbox](https://github.com/Mark-a-Hamilton/kali-toolbox)
