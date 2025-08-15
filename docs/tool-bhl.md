@@ -68,4 +68,4 @@ tool-bhl --hashmap
 
 ## 🤖 AI Usage Disclosure
 
-This tool was co-authored with AI assistance. For details on ethical AI integration and authorship standards, see the [AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/AI.md) file in the root directory.
+This tool was co-authored with AI assistance. For details on ethical AI integration and authorship standards, see the [AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/ethic_AI.md) file in the root directory.
