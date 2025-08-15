@@ -1,19 +1,16 @@
 #!/bin/bash
-
-# ┌─────────────────────────────────────────────────┐
-# │   File / Version : tool-cleanup / live          │
-# │   Author : Mark Hamilton │ Co-Pilot AI assisted │
-# │   Script : System maintenance                   │
-# │   Package : toolbox                             │
-# │   Purpose : System hygiene and cleanup wrapper  │
-# └─────────────────────────────────────────────────┘
-
+# ┌────────────────────────────────────────────────------─┐
+# │ File / Version : tool-cleanup / live                  │
+# │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
+# │ Script Purpose : System maintenance & hygiene         │
+# │ Package        : toolbox                              │
+# └────────────────────────────────────────────────------─┘
 # Usage:
 # tool-cleanup [--dry-run] [--verbose] [--log] [--hashmap]
-
 # Examples:
 # tool-cleanup --dry-run
 # tool-cleanup --log
+# tool-cleanup --hashmap
 # End Help
 
 set -e
