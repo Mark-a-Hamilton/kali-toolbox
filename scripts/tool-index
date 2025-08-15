@@ -1,7 +1,5 @@
 #!/bin/bash 
 
-# TO DO Create an index fro all tools in the toolbox with usage and guides can have either (All tools if no parameters) or (a specific tool if a tool is identified)
-
 # ┌─────────────────────────────────────────────────┐
 # │   File / Version : tool-index / live            │
 # │   Author : Mark Hamilton │ Co-Pilot AI assisted │
@@ -9,6 +7,17 @@
 # │   Package : toolbox                             │
 # │   Purpose : toolbox Help tool                   │
 # └─────────────────────────────────────────────────┘
+# Usage:
+#   tool-index [<tool-name>]
+# Examples:
+#   tool-index
+#   tool-index tool-diag
+#   tool-index tool-update
+# Description:
+#   Lists all available tools in the Kali Toolbox with version info.
+#   If a tool name is provided, displays its embedded help block.
+#   Parses help blocks using '# Usage:' to '# End Help' comment markers.
+# End Help
 
 TOOL_DIR="/usr/local/bin"
 TOOL_PREFIX="tool-"
