@@ -1,87 +1,81 @@
-# 🩺 kali-diagnostics
+# 🩺 tool-diag
 
-The `kali-diagnostics` script is a modular wrapper for basic system diagnostics in Kali Linux. It checks service status, network connectivity, and system health, with optional logging and hash-based traceability.
+`tool-diag` is a modular diagnostics and system health tool for Kali Linux. It performs checks on uptime, memory, disk usage, and service status, with optional dry-run, logging, and hash-based traceability.
 
 ---
 
 ## 📦 Purpose
 
-This script provides quick visibility into system status by:
-- Checking key services
-- Validating network connectivity
-- Reporting uptime and resource usage
-- Logging actions and hashing for audit-grade traceability
+This tool helps assess system health and operational readiness by:
+
+- Reporting uptime, memory, and disk usage
+- Checking service status (e.g. Neo4j, BloodHound)
+- Logging diagnostics with timestamps
+- Generating SHA-256 hashes for audit trails
 
 ---
 
 ## 🚀 Usage
 
-### Basic diagnostics
-
+### Basic Diagnostics
 ```bash
-kali-diagnostics
+tool-diag
 ```
+Runs all diagnostic checks directly.
 
-Runs all checks with no logging or simulation.
-
-### Dry-run mode
-
+### Dry-Run Mode
 ```bash
-kali-diagnostics --dry-run
+tool-diag --dry-run
 ```
+Simulates diagnostics without executing commands.
 
-Simulates each check without executing.
-
-### With logging
-
+### With Logging
 ```bash
-kali-diagnostics --log
+tool-diag --log
 ```
+Appends diagnostic results to `/var/log/tool-diag.log`.
 
-Appends execution details to `/var/log/kali-diagnostics.log`.
-
-### With hash-based audit
-
+### With Hash-Based Audit
 ```bash
-kali-diagnostics --hashmap
+tool-diag --hashmap
 ```
-
 Generates a SHA-256 hash of the script and logs the timestamp to `.hashmap/`.
 
 ---
 
 ## ⚙️ Parameters
 
-| Flag         | Description                                                  |
-|--------------|--------------------------------------------------------------|
-| `--dry-run`  | Simulates diagnostic steps without executing                 |
-| `--log`      | Logs actions to `/var/log/kali-diagnostics.log`              |
-| `--hashmap`  | Stores script hash and timestamp in `.hashmap/`              |
-| `--help`     | Displays usage instructions                                  |
+| Flag         | Description                                      |
+|--------------|--------------------------------------------------|
+| `--dry-run`  | Simulates diagnostics without executing          |
+| `--log`      | Logs results to `/var/log/tool-diag.log`         |
+| `--hashmap`  | Stores script hash and timestamp in `.hashmap/`  |
+| `--network`  | Includes network diagnostics (e.g. ping, route)  |
+| `--help`     | Displays usage instructions                      |
 
 ---
 
-## 🔧 Checks Performed
+## 🔧 Diagnostics Performed
 
-| Command                 | Description                          |
-|-------------------------|--------------------------------------|
-| `systemctl status`      | Checks service status                |
-| `ping -c 4 8.8.8.8`     | Validates external connectivity      |
-| `uptime`                | Reports system uptime                |
-| `free -h`               | Displays memory usage                |
+| Check              | Description                                |
+|--------------------|--------------------------------------------|
+| `uptime`           | System uptime                              |
+| `free -h`          | Memory usage summary                       |
+| `df -h`            | Disk usage summary                         |
+| `systemctl status` | Service health checks                      |
+| `ping`, `ip route` | Optional network diagnostics               |
 
 ---
 
 ## 📁 Output
 
-Includes:
-- Confirmation of each check executed or simulated
-- Optional log file with timestamped actions
-- Optional `.hashmap/` entries for audit traceability
+- Console summary of system health
+- Optional log file with timestamped diagnostics
+- Optional `.hashmap/` entry for audit traceability
 
 ---
 
-## 📢 Disclaimer
+## 🤖 AI Usage Disclosure
 
-This script wraps existing system commands and is intended solely for system hygiene. It does **not** perform any security scanning or enumeration. Use responsibly and only in environments where you have explicit permission.
-enumeration, scanning, or offensive actions. Use responsibly and only in environments where you have explicit permission.
+This tool was co-authored with AI assistance. For details on ethical AI integration and authorship standards, see the [AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/AI.md) file in the root directory.
+
