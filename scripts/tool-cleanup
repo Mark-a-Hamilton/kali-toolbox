@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ┌────────────────────────────────────────────┐
-# │           kali-cleanup v1.0                │
+# │           tool-cleanup v1.0                │
 # │   System hygiene and cleanup wrapper       │
 # └────────────────────────────────────────────┘
 
