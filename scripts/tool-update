@@ -7,6 +7,17 @@
 # │   Package : toolbox                             │
 # │   Purpose : Update Kali packages                │
 # └─────────────────────────────────────────────────┘
+# Usage:
+#   tool-update [--dry-run] [--log] [--hashmap]
+# Examples:
+#   tool-update --dry-run
+#   tool-update --log
+#   tool-update --hashmap
+# Description:
+#   Updates Kali packages using apt update, upgrade, autoremove, and clean.
+#   Supports dry-run simulation, logging to /var/log/tool-update.log,
+#   and hash-based traceability via .hashmap.
+# End Help
 
 set -e
 
