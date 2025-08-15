@@ -79,7 +79,5 @@ This script wraps standard system commands for hygiene purposes only. It does **
 
 ---
 
-🤖 AI Usage Disclosure
-This tool is part of a broader initiative to maintain ethical clarity in AI-assisted tooling. For details on how AI contributes to authorship, documentation, and modular design in this project, see the [AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/ethics_AI.md) file in the root directory.
-
----
+## 🤖 AI & Ethics Usage Disclosure
+This tool was co-authored with AI assistance. For full details on ethical integration, traceability, and responsible authorship, see [ethics_AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/ethics_AI.md).
