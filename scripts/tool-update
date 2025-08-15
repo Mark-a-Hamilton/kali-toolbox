@@ -1,12 +1,10 @@
 #!/bin/bash
-
-# ┌─────────────────────────────────────────────────┐
-# │   File / Version : tool-update / live           │
-# │   Author : Mark Hamilton │ Co-Pilot AI assisted │
-# │   Script : Update tool                          │
-# │   Package : toolbox                             │
-# │   Purpose : Update Kali packages                │
-# └─────────────────────────────────────────────────┘
+# ┌─────────────────────────────────────────────────------┐
+# │ File / Version : tool-update / live                   │
+# │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
+# │ Script Purpose : Update Kali Packages.                │
+# │ Package        : toolbox                              │
+# └──────────────────────────────────────────────--------─┘
 # Usage:
 #   tool-update [--dry-run] [--log] [--hashmap]
 # Examples:
