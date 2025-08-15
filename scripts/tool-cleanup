@@ -8,6 +8,15 @@
 # │   Purpose : System hygiene and cleanup wrapper  │
 # └─────────────────────────────────────────────────┘
 
+# Usage:
+#   tool-cleanup [--dry-run] [--verbose]
+#
+# Examples:
+#   tool-cleanup --dry-run
+#   tool-cleanup --verbose
+#
+# End Help
+
 set -e
 
 LOG=false
