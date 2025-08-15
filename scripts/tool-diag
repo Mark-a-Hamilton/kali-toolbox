@@ -1,13 +1,10 @@
 #!/bin/bash
-
-# ┌─────────────────────────────────────────────────┐
-# │   File / Version : tool-diag / live             │
-# │   Author : Mark Hamilton │ Co-Pilot AI assisted │
-# │   Script : Diagnostics tool                     │
-# │   Package : toolbox                             │
-# │   Purpose : System health check and logging tool│
-# └─────────────────────────────────────────────────┘
-
+# ┌────────────────------─────────────────────────────────┐
+# │ File / Version : tool-diag / live                     │
+# │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
+# │ Script Purpose : Systems Diagnostics & health tool.   │
+# │ Package        : toolbox                              │
+# └────────────────────────────────────────────────------─┘
 # Usage:
 #   tool-diag [--dry-run] [--log] [--hashmap] [--network]
 # Examples:
@@ -19,7 +16,6 @@
 #   Optional flags enable dry-run simulation, logging to /var/log/tool-diag.log,
 #   network diagnostics, and hash-based traceability via .hashmap.
 # End Help
-
 
 set -e
 
