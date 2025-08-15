@@ -9,3 +9,28 @@
 # │   Package : toolbox                             │
 # │   Purpose : toolbox Help tool                   │
 # └─────────────────────────────────────────────────┘
+
+TOOL_DIR="/usr/local/bin"
+TOOL_PREFIX="tool-"
+
+if [ -z "$1" ]; then
+  echo "Available Tools in Kali Toolbox:"
+  for file in $TOOL_DIR/${TOOL_PREFIX}*; do
+    name=$(basename "$file")
+    purpose=$(grep -m1 "Script Purpose" "$file" | cut -d':' -f2 | xargs)
+    version=$(grep -m1 "Version" "$file" | cut -d':' -f2 | xargs)
+    printf "%-15s : %s (Version: %s)\n" "$name" "$purpose" "$version"
+  done
+  echo -e "\nUse 'tool-index <tool-name>' for detailed help."
+else
+  target="$TOOL_DIR/$1"
+  if [ -f "$target" ]; then
+    awk '/┌/,/┘/' "$target"
+    echo -e "\nUsage Guide:"
+    awk '/^# Usage:/,/^# Examples:/' "$target" | sed 's/^# //'
+    echo -e "\nExamples:"
+    awk '/^# Examples:/,/^# End Help/' "$target" | sed 's/^# //'
+  else
+    echo "Tool '$1' not found in $TOOL_DIR."
+  fi
+fi
