@@ -64,8 +64,7 @@ The AI will return a fully structured script that slots into the toolbox with mi
 
 ---
 
-## 📎 Related Docs
+## 🤖 AI Usage Disclosure
 
-- [tool-index.md](https://github.com/Mark-a-Hamilton/kali-toolbox/tree/main/docs) — Parses and displays metadata from all tools
-- [tool-cleanup.md](https://github.com/Mark-a-Hamilton/kali-toolbox/tree/main/docs) — Example of a fully modular tool using this template
-- [AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/tree/main/docs) — Ethical AI usage and authorship disclosure
+This tool was co-authored with AI assistance. For details on ethical AI integration and authorship standards, see the [AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/AI.md) file in the root directory.
+
