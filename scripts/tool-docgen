@@ -1,1 +1,106 @@
-# Document Generator Placeholder
+#!/bin/bash
+
+# ┌────────────────────────────────────────────────────────────┐
+# │ File / Version : tool-docgen / live                        │
+# │ Author : Mark Hamilton │ Co-Pilot AI assisted              │
+# │ Script Purpose : Generate MD docs from Scripts             │
+# │ Package : toolbox                                          │
+# └────────────────────────────────────────────────────────────┘
+# Usage:
+#   tool-docgen.sh tool-example > docs/tool-example.md
+# Examples: to be completed
+#   tool-docgen --dry-run        outputs what will be done - no changes made.
+# Description:
+#   After creating a new tool with tool-template scripts, naming it to tool-<newtoolname> then this
+#   script generates the markdown documentation for the stated tool (tool-example) to the destination
+#   (docs/tool-example.md).
+# End Help
+
+
+# tool-docgen — Generates Markdown documentation for tool-* scripts
+
+script="$1"
+toolname=$(basename "$script")
+output="~/Documents/$toolname.md"
+
+# Extract help block
+help_block=$(grep -E '^#' "$script" | sed 's/^# //')
+
+# Extract flags
+flags=$(grep -Eo '\-\-[a-zA-Z0-9\-]+' "$script" | sort -u)
+
+# Start Markdown output
+cat <<EOF
+# 🛠️ $toolname
+
+$toolname is a modular utility for Kali Linux. It performs <brief-purpose> with optional dry-run, logging, and hash-based audit support, ensuring safe and traceable execution.
+
+---
+
+## 📦 Purpose
+
+<expanded-purpose>
+
+---
+
+## 🚀 Usage
+
+### Basic Execution
+\`\`\`bash
+$toolname
+\`\`\`
+
+### Dry-Run Mode
+\`\`\`bash
+$toolname --dry-run
+\`\`\`
+
+### With Logging
+\`\`\`bash
+$toolname --log
+\`\`\`
+
+### With Hash-Based Audit
+\`\`\`bash
+$toolname --hashmap
+\`\`\`
+
+---
+
+## ⚙️ Parameters
+
+| Flag         | Description                                      |
+|--------------|--------------------------------------------------|
+EOF
+
+for flag in $flags; do
+    echo "| \`$flag\` | <description> |"
+done
+
+cat <<EOF
+
+---
+
+## 🔧 Steps Performed
+
+| Command             | Description                        |
+|---------------------|------------------------------------|
+| <command>           | <description>                      |
+
+---
+
+## 📁 Output
+
+- Console summary of actions
+- Optional log file with timestamped entries
+- Optional \`.hashmap/\` entry for audit traceability
+
+---
+
+## 🤖 AI & Ethics Disclosure
+
+This tool was co-authored with AI assistance. For full details on ethical integration, traceability, and responsible authorship, see [ethics_AI.md](https://mark-a-hamilton.github.io/main/ethics_AI.md).
+🔙 [Return to Kali-toolbox](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/kali-toolbox)
+
+---
+EOF
