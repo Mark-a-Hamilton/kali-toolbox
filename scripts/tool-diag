@@ -10,7 +10,6 @@
 
 # Usage:
 #   tool-diag [--dry-run] [--log] [--hashmap] [--network]
-
 # Examples:
 #   tool-diag --dry-run
 #   tool-diag --log --network
