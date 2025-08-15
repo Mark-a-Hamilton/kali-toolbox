@@ -1,12 +1,10 @@
 #!/bin/bash
-
-# ┌─────────────────────────────────────────────────┐
-# │ File / Version : tool-index / live              │
-# │ Author : Mark Hamilton │ Co-Pilot AI assisted   │
-# │ Script : Toolbox Index                          │
-# │ Package : toolbox                               │
-# │ Purpose : toolbox Help tool                     │
-# └─────────────────────────────────────────────────┘
+# ┌───────────────────────────────────────────--------────┐
+# │ File / Version : tool-index / live                    │
+# │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
+# │ Script Purpose : Toolbox Index                        │
+# │ Package        : toolbox                              │
+# └───────────────────────────────────────────────------──┘
 # Usage:
 #   tool-index [<tool-name>]
 # Examples:
