@@ -16,7 +16,6 @@
 #   (docs/tool-example.md).
 # End Help
 
-
 # tool-docgen — Generates Markdown documentation for tool-* scripts
 
 script="$1"
