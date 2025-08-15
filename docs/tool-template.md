@@ -64,7 +64,8 @@ The AI will return a fully structured script that slots into the toolbox with mi
 
 ---
 
-## 🤖 AI Usage Disclosure
+## 🤖 AI & Ethics Usage Disclosure
 
-This tool was co-authored with AI assistance. For details on ethical AI integration and authorship standards, see the [AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/ethics_AI.md) file in the root directory.
+This tool was co-authored with AI assistance. For full details on ethical integration, traceability, and responsible authorship, see [ethics_AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/ethics_AI.md).
+
 
