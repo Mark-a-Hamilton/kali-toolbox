@@ -26,8 +26,9 @@ if [ -z "$1" ]; then
   echo "Available Tools in Kali Toolbox:"
   for file in $TOOL_DIR/${TOOL_PREFIX}*; do
     name=$(basename "$file")
-    purpose=$(grep -m1 "Script Purpose" "$file" | cut -d':' -f2- | sed 's/^ *//;s/ *$//')
-    version=$(grep -m1 "Version" "$file" | cut -d':' -f2- | sed 's/^ *//;s/ *$//')
+    purpose=$(grep -m1 "^#.*Script Purpose" "$file" | cut -d':' -f2- | sed 's/^ *//;s/ *$//')
+    version=$(grep -m1 "^#.*Version" "$file" | cut -d':' -f2- | sed 's/^ *//;s/ *$//')
+
     printf "%-15s : %s (Version: %s)\n" "$name" "$purpose" "$version"
   done
   echo -e "\nUse 'tool-index <tool-name>' for detailed help."
