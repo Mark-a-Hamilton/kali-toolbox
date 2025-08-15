@@ -80,4 +80,5 @@ This script wraps standard system commands for hygiene purposes only. It does **
 ---
 
 ## 🤖 AI & Ethics Usage Disclosure
+
 This tool was co-authored with AI assistance. For full details on ethical integration, traceability, and responsible authorship, see [ethics_AI.md](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/blob/main/ethics_AI.md).
