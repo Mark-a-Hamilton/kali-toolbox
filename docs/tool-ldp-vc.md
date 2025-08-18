@@ -12,7 +12,7 @@ Suffix `-live` indicates stable release.
 - 📅 Date: 2025-08-18
 - 🧑 Requestor: Mark Hamilton
 - 📝 Reason: Initial stable release
-- 🔧 Change: Linux Desktop Launcher.
+- 🔧 Change: Added to launch the Kali Linux Desktop.
 
 ---
 
