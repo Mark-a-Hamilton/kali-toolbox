@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # ┌───────────────────────────────────────────--------────┐
-# │ File / Version : tool-zpg / live python               │
+# │ Type / Version : python / live                        │
 # │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
 # │ Script Purpose : VyOS Zone Pair Generator             │
 # │ Package        : toolbox                              │
