@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# ┌────────────────────────────────────────────────────────────┐
-# │ File / Version : tool-docgen / live                        │
-# │ Author : Mark Hamilton │ Co-Pilot AI assisted              │
-# │ Script Purpose : Generate MD docs from Scripts             │
-# │ Package : toolbox                                          │
-# └────────────────────────────────────────────────────────────┘
+# ┌────────────────────────────────────────────────┐
+# │ Type / Version : bash / live                   │
+# │ Author : Mark Hamilton │ Co-Pilot AI assisted  │
+# │ Script Purpose : Generate MD docs from Scripts │
+# │ Package : toolbox                              │
+# └────────────────────────────────────────────────┘
 # Usage:
 #   tool-docgen.sh tool-example > docs/tool-example.md
 # Examples: to be completed
