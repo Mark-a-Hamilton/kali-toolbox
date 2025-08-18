@@ -12,7 +12,7 @@ Suffix `-live` indicates stable release.
 - 📅 Date: 2025-08-18
 - 🧑 Requestor: Mark Hamilton
 - 📝 Reason: Initial stable release
-- 🔧 Change: Added BloodHound launcher with Neo4j service wrapper. Includes metadata block for indexing and ethical framing.
+- 🔧 Change: Added Template for new toolbox tools.
 
 ---
 
