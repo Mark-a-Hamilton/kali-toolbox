@@ -1,124 +1,109 @@
-#!/bin/bash
+#!/usr/bin/env python3
 
-# ┌────────────────────────────────────────────────┐
-# │ Type / Version : bash / live                   │
-# │ Author : Mark Hamilton │ Co-Pilot AI assisted  │
-# │ Script Purpose : Generate MD docs from Scripts │
-# │ Package : toolbox                              │
-# └────────────────────────────────────────────────┘
-# Usage:
-#   tool-docgen.sh tool-example > docs/tool-example.md
-# Examples: to be completed
-#   tool-docgen --dry-run        outputs what will be done - no changes made.
-# Description:
-#   After creating a new tool with tool-template scripts, naming it to tool-<newtoolname> then this
-#   script generates the markdown documentation for the stated tool (tool-example) to the destination
-#   (docs/tool-example.md).
-# End Help
+import os
+import re
+import argparse
 
-script="$1"
-toolname=$(basename "$script")
-output="~/Documents/$toolname.md"
+DOC_DIR = "docs"
+os.makedirs(DOC_DIR, exist_ok=True)
 
-# Extract help block and parse key fields
-help_block=$(grep -E '^#' "$script" | sed 's/^# //' | tr -d '\r')
-brief_purpose=$(echo "$help_block" | grep 'Script Purpose' | cut -d':' -f2- | xargs)
-author=$(echo "$help_block" | grep 'Author' | cut -d':' -f2- | xargs)
-version=$(echo "$help_block" | grep 'File / Version' | cut -d':' -f2- | xargs)
+def extract_metadata(script_path):
+    with open(script_path, 'r') as f:
+        content = f.read()
 
-# Extract flags and infer basic descriptions
-flags=$(grep -Eo '--[a-zA-Z0-9\-]+' "$script" | sort -u)
+    def grep(pattern):
+        match = re.search(pattern, content)
+        return match.group(1).strip() if match else None
 
-# Heuristic flag descriptions (fallback)
-describe_flag() {
-  case "$1" in
-    --dry-run) echo "Simulates execution without making changes." ;;
-    --log) echo "Enables logging of actions to a timestamped file." ;;
-    --hashmap) echo "Generates hash-based audit trace for traceability." ;;
-    *) echo "Custom flag. Description may vary." ;;
-  esac
-}
+    metadata = {
+        "tool_name": os.path.basename(script_path),
+        "author": grep(r"# │ Author\s*:\s*(.+)"),
+        "package": grep(r"# │ Package\s*:\s*(.+)"),
+        "purpose": grep(r"# │ Script Purpose\s*:\s*(.+)"),
+        "description": grep(r"# Description:\s*(.+)")
+    }
 
-# Start Markdown output
-cat <<EOF
-# 🛠️ $toolname
+    # Fallbacks
+    if not metadata["description"]:
+        metadata["description"] = metadata["purpose"] or "⚠️ No Description Available"
+    if not metadata["author"]:
+        metadata["author"] = "⚠️ Unknown Author"
+    if not metadata["package"]:
+        metadata["package"] = "⚠️ Unknown Package"
 
-$toolname is a modular utility for Kali Linux. It performs $brief_purpose with optional dry-run, logging, and hash-based audit support, ensuring safe and traceable execution.
+    # Extract flags
+    flags = re.findall(r'case "\$1" in\s*\n\s*--(\w+)', content)
+    metadata["flags"] = flags
 
----
+    return metadata
 
-## 📦 Purpose
+def generate_markdown(meta, dry_run=False):
+    md_path = os.path.join(DOC_DIR, f"{meta['tool_name']}.md")
+    lines = [
+        f"# {meta['tool_name']}\n",
+        "## 📌 Purpose\n" + meta["description"] + "\n",
+        "## 🧑‍💻 Author\n" + meta["author"] + "\n",
+        "## 🧰 Package\n" + meta["package"] + "\n",
+        "## ⚙️ CLI Arguments\n```",
+        f"{meta['tool_name']} [{' '.join('--' + f for f in meta['flags'])}]",
+        "```\n",
+        "### 🔧 Flags"
+    ]
 
-$brief_purpose
+    for flag in meta["flags"]:
+        if flag == "dry-run":
+            lines.append("- `--dry-run`: Simulates actions without executing")
+        elif flag == "log":
+            lines.append(f"- `--log`: Appends steps to `/var/log/{meta['tool_name']}.log`")
+        elif flag == "hashmap":
+            lines.append("- `--hashmap`: Generates hash and timestamp for audit trail")
+        else:
+            lines.append(f"- `--{flag}`: Description not available")
 
----
+    lines.append("\n## 🧪 Example Usage")
+    for flag in meta["flags"]:
+        lines.append("```bash")
+        lines.append(f"{meta['tool_name']} --{flag}")
+        lines.append("```")
 
-## 👤 Author & Version
+    lines += [
+        "\n## 📂 Output Structure",
+        f"- `/var/log/{meta['tool_name']}.log`: Log file (if `--log`)",
+        f"- `.hashmap/{meta['tool_name']}.hash`: SHA256 hash (if `--hashmap`)",
+        f"- `.hashmap/{meta['tool_name']}.timestamp`: Timestamp (if `--hashmap`)",
+        "\n## 🔍 Traceability Features",
+        "- Dry-run mode for safe simulation",
+        "- Logging for operational audit",
+        "- Hash-based integrity check",
+        "\n## 🔗 Related Tools",
+        "Auto-linked via `tool-box.md`",
+        "\n## 🧠 Contributor Notes",
+        "This documentation was generated by `tool-docgen.py` using AI-assisted analysis."
+    ]
 
-- Author: $author
-- Version: $version
+    if dry_run:
+        print(f"\n📄 Preview of {meta['tool_name']}.md:\n")
+        print("\n".join(lines))
+    else:
+        with open(md_path, 'w') as f:
+            f.write("\n".join(lines))
+        print(f"✅ Doc generated: {md_path}")
 
----
+def main():
+    parser = argparse.ArgumentParser(description="Generate Markdown docs for toolbox scripts.")
+    parser.add_argument("target", help="Script file or directory")
+    parser.add_argument("--dry-run", action="store_true", help="Preview output without writing")
+    args = parser.parse_args()
 
-## 🚀 Usage
+    if os.path.isdir(args.target):
+        for file in os.listdir(args.target):
+            path = os.path.join(args.target, file)
+            if os.path.isfile(path) and (file.endswith(".sh") or os.access(path, os.X_OK)):
+                meta = extract_metadata(path)
+                generate_markdown(meta, dry_run=args.dry_run)
+    else:
+        meta = extract_metadata(args.target)
+        generate_markdown(meta, dry_run=args.dry_run)
 
-### Basic Execution
-\`\`\`bash
-$toolname
-\`\`\`
-
-### Dry-Run Mode
-\`\`\`bash
-$toolname --dry-run
-\`\`\`
-
-### With Logging
-\`\`\`bash
-$toolname --log
-\`\`\`
-
-### With Hash-Based Audit
-\`\`\`bash
-$toolname --hashmap
-\`\`\`
-
----
-
-## ⚙️ Parameters
-
-| Flag | Description |
-|------|-------------|
-EOF
-
-for flag in $flags; do
-  echo "| \`$flag\` | $(describe_flag "$flag") |"
-done
-
-cat <<EOF
-
----
-
-## 🔧 Steps Performed
-
-| Command | Description |
-|---------|-------------|
-| <command> | <description> |
-
----
-
-## 📁 Output
-
-- Console summary of actions
-- Optional log file with timestamped entries
-- Optional \`.hashmap/\` entry for audit traceability
-
----
-
-## 🤖 AI & Ethics Disclosure
-
-This tool was co-authored with AI assistance. For full details on ethical integration, traceability, and responsible authorship, see [ethics_AI.md](https://mark-a-hamilton.github.io/main/ethics_AI.md).
-
-🔙 [Return to Kali-toolbox](https://github.com/Mark-a-Hamilton/Mark-a-Hamilton.github.io/kali-toolbox)
-
----
-EOF
+if __name__ == "__main__":
+    main()
