@@ -12,7 +12,7 @@ Suffix `-live` indicates stable release.
 - 📅 Date: 2025-08-18
 - 🧑 Requestor: Mark Hamilton
 - 📝 Reason: Initial stable release
-- 🔧 Change: Systems Diagnostics & health tool.
+- 🔧 Change: Added to Diagnose Systems issues & do health checks.
 
 ---
 
