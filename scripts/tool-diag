@@ -1,6 +1,6 @@
 #!/bin/bash
 # ┌────────────────------─────────────────────────────────┐
-# │ File / Version : tool-diag / live                     │
+# │ Type / Version : bash / live                          │
 # │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
 # │ Script Purpose : Systems Diagnostics & health tool.   │
 # │ Package        : toolbox                              │
