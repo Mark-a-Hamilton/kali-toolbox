@@ -1,16 +1,16 @@
 #!/bin/bash
 # ┌───────────────────────────────────────────--------────┐
-# │ File / Version : tool-index / live                    │
+# │ Type / Version : bash / live                          │
 # │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
 # │ Script Purpose : Toolbox Index                        │
 # │ Package        : toolbox                              │
 # └───────────────────────────────────────────────------──┘
 # Usage:
-#   tool-index [<tool-name>]
+#   tool-box [<tool-name>]
 # Examples:
-#   tool-index
-#   tool-index tool-diag
-#   tool-index tool-update
+#   tool-box
+#   tool-box tool-diag
+#   tool-box tool-update
 # Description:
 #   Lists all available tools in the Kali Toolbox with version info.
 #   If a tool name is provided, displays its embedded help block.
@@ -30,7 +30,8 @@ if [ -z "$1" ]; then
     # Format output
     printf "%-15s : %-45s (Version: %s)\n" "$name" "$purpose" "$version"
   done
-  echo -e "\nUse 'tool-index <tool-name>' for detailed help."
+  echo -e "\nFor bash script detailed help use 'tool-box <tool-name>'."
+  echo -e "For python script detailed help use '<tool-name> -h'."
 else
   target="$TOOL_DIR/$1"
   if [ -f "$target" ]; then
