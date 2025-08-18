@@ -10,6 +10,7 @@
 import os
 import re
 import argparse
+import textwrap
 
 DOC_DIR = "docs"
 os.makedirs(DOC_DIR, exist_ok=True)
@@ -97,7 +98,28 @@ def generate_markdown(meta, dry_run=False):
         print(f"✅ Doc generated: {md_path}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate Markdown docs for toolbox scripts.")
+    parser = argparse.ArgumentParser(
+    prog="tool-docgen",
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+    description=textwrap.dedent("""
+        Generate Markdown documentation for toolbox scripts using AI-assisted analysis.
+
+        This tool scans script metadata and CLI flags to produce consistent, contributor-friendly docs.
+        It supports both single-script and batch directory modes.
+
+        📁 Output: docs/tool-name.md
+        🔗 Related tools are auto-linked via tool-box.md
+
+        Examples:
+          [python3] tool-docgen scripts/tool-update
+          [python3] tool-docgen scripts/ --dry-run
+
+        Flags:
+          --dry-run   Preview output without writing to file
+
+        For contributor standards and formatting, see: tool-box.md
+    """)
+)
     parser.add_argument("target", help="Script file or directory")
     parser.add_argument("--dry-run", action="store_true", help="Preview output without writing")
     args = parser.parse_args()
