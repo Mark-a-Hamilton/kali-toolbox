@@ -1,10 +1,10 @@
 #!/bin/bash
-# ┌────────────────────────────────────────────────────────────┐
-# │ File / Version  : tool-template / 0.1-dev                  │
-# │ Author          : Mark Hamilton & Co-Pilot AI assisted     │
-# │ Script Purpose  : Template for new toolbox tools           │
-# │ Package         : toolbox                                  │
-# └────────────────────────────────────────────────────────────┘
+# ┌────────────────────────────────────────────────────────┐
+# │ Type / Version  : bash / 0.1-dev                       │
+# │ Author          : Mark Hamilton & Co-Pilot AI assisted │
+# │ Script Purpose  : Template for new toolbox tools       │
+# │ Package         : toolbox                              │
+# └────────────────────────────────────────────────────────┘
 # Usage:
 #   tool-template [--dry-run] [--verbose]
 # Examples:
