@@ -1,6 +1,6 @@
 #!/bin/bash
 # ┌─────────────────────────────────────────────────------┐
-# │ File / Version : tool-update / live                   │
+# │ Type / Version : bash / live                          │
 # │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
 # │ Script Purpose : Update Kali Packages.                │
 # │ Package        : toolbox                              │
