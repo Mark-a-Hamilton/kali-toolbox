@@ -67,6 +67,7 @@ fi
 
 # ── Logging Setup ────────────────────────────────────────
 if $LOGGING; then
+  mkdir -p "$(dirname "$LOG_FILE")"
   echo "[*] Logging enabled → $LOG_FILE"
   $CMD 2>>"$LOG_FILE" | while read line; do
     echo "[LOG][$(date +'%H:%M:%S')] $line"
@@ -84,4 +85,3 @@ if $HASHMAP; then
   echo "[*] Timestamp → $TIMESTAMP_FILE"
   echo "[*] Hash → $HASH_FILE"
 fi
-
