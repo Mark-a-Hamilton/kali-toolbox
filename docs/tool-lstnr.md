@@ -1,45 +1,67 @@
-# tool-lstnr
+#!/bin/bash
+# ┌───────────────────────────────────────────--------────┐
+# │ Type / Version : bash / live                          │
+# │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
+# │ Script Purpose : Linux Desktop Launcher               │
+# │ Package        : toolbox                              │
+# └───────────────────────────────────────────────------──┘
+# Usage:
+#   tool-launch-desktop
+# Description:
+#   Launches a Linux desktop session with X11 rendering, D-Bus setup,
+#   ICE socket fix, and session lock cleanup. Designed for local use
+#   in authorized environments. Logs all actions for traceability.
+# End Help
 
-## 🧰 Purpose
-Start a listener on a specified port using `socat` (preferred) or `netcat` (fallback). Includes dry-run mode, logging, and hash-based traceability. Designed for authorized, defensive use only.
+LOGFILE="$HOME/Documents/desktop-launch.log"
+exec >> "$LOGFILE" 2>&1
+echo "-----------------------------"
+echo "Launch started: $(date)"
 
-## 🧑‍💻 Author
-Mark Hamilton │ Co-Pilot AI assisted
+# Resolve DISPLAY
+export DISPLAY=$(ip route | awk '/^default/ {print $3}'):0.0
+echo "DISPLAY set to: $DISPLAY"
 
-## 📦 Package
-toolbox
+# X11 rendering options
+export LIBGL_ALWAYS_INDIRECT=1
+export GDK_BACKEND=x11
+export QT_QPA_PLATFORM=xcb
+echo "X11 backend variables set"
 
-## 🛡️ Ethical Scope
-This tool is passive and non-exploitative. It does not initiate outbound connections or payloads. Intended for authorized environments only. See `ethics_AI.md` for usage boundaries.
+# Check and start D-Bus session
+if [ ! -S /run/user/$(id -u)/bus ]; then
+    eval "$(dbus-launch --sh-syntax)"
+    echo "Started new D-Bus session with PID: $DBUS_SESSION_BUS_PID"
+else
+    echo "D-Bus session already active"
+fi
 
-## ⚙️ Usage
-```bash
-tool-lstnr [--port <PORT>] [--dry-run] [--log] [--hashmap]
-```
+# Fix ICE socket
+if [ -d /tmp/.ICE-unix ]; then
+    sudo chown root:root /tmp/.ICE-unix && echo "Fixed ICE ownership"
+    sudo chmod 1777 /tmp/.ICE-unix && echo "Set ICE permissions"
+else
+    echo "/tmp/.ICE-unix not found"
+fi
 
-## 🧪 Examples
-```bash
-tool-lstnr
-tool-lstnr --port 5555 --log --hashmap
-```
+# Remove old session locks
+rm -f ~/.cache/sessions/xfce4-session-*.lock 2>/dev/null && echo "Cleared xfce4 session lock"
 
-## 🧩 Flags
-| Flag        | Description                                      |
-|-------------|--------------------------------------------------|
-| `--port`    | Specify listener port (default: 4444)            |
-| `--dry-run` | Simulate setup without launching listener        |
-| `--log`     | Log session output to `~/Documents/listener.log` |
-| `--hashmap` | Generate `.hashmap` files for audit traceability |
+# Start window manager if needed
+if ! pgrep -x "xfwm4" > /dev/null; then
+    nohup xfwm4 --replace >/dev/null 2>&1 &
+    echo "Started xfwm4"
+else
+    echo "xfwm4 already running"
+fi
 
-## 📂 Output Files
-- `~/Documents/listener.log`: Session log (if `--log` used)
-- `~/Documents/.hashmap/tool-lstnr.hash`: SHA256 hash of script
-- `~/Documents/.hashmap/tool-lstnr.timestamp`: Launch timestamp
+# Export Xauthority
+export XAUTHORITY=$HOME/.Xauthority
+echo "XAUTHORITY set to: $XAUTHORITY"
 
-## 🔗 Related Tools
-- `tool-box`: Index and help parser
-- `tool-diag`: Diagnostic wrapper
-- `tool-update`: Toolbox updater
+# Start full session
+nohup startxfce4 >/dev/null 2>&1 &
+disown
+echo "Launched startxfce4 in background"
 
-## 🧠 Contributor Notes
-This tool replaces legacy `nc` and `socat` scripts. It is modular, traceable, and aligned with toolbox standards. Metadata block is compatible with `tool-box` indexing.
+echo "Launch completed: $(date)"
