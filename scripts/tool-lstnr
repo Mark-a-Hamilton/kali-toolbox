@@ -20,7 +20,7 @@
 TOOL_NAME="tool-lstnr"
 VERSION="1.0"
 DEFAULT_PORT=4444
-LOG_FILE="listener.log"
+LOG_FILE="~/Documents/listener.log"
 HASH_DIR="~/Documents/.hashmap"
 TIMESTAMP_FILE="$HASH_DIR/${TOOL_NAME}.timestamp"
 HASH_FILE="$HASH_DIR/${TOOL_NAME}.hash"
