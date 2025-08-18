@@ -1,6 +1,6 @@
 #!/bin/bash
 # ┌────────────────────────────────────────────────────────────┐
-# │ File / Version : tool-bhl / live                           │
+# │ Type / Version : bash / live                               │
 # │ Author : Mark Hamilton │ Co-Pilot AI assisted              │
 # │ Script Purpose : Start Neo4j service & Bloodhound Launcher │
 # │ Package : toolbox                                          │
