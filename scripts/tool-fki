@@ -5,11 +5,14 @@
 # │ Script Purpose : Full Kali Installer including Desktop     │
 # │ Package : toolbox                                          │
 # └────────────────────────────────────────────────────────────┘
+# 
 # Usage:
 #   tool-fki [update]
+# 
 # Examples:
 #   tool-fki
 #   tool-fki update
+#
 # Description:
 #   Installs the full Kali Suite (kali-linux-everything) including the default desktop environment all in a single step.
 #   The update option (Recommended) ensures that all the packages in the installation are fully up to date.
