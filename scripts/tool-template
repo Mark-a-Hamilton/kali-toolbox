@@ -5,12 +5,15 @@
 # │ Script Purpose  : Template for new toolbox tools       │
 # │ Package         : toolbox                              │
 # └────────────────────────────────────────────────────────┘
+# 
 # Usage:
 #   tool-template [--dry-run] [--verbose]
+# 
 # Examples:
 #   tool-template
 #   tool-template --dry-run
 #   tool-template --verbose
+# 
 # Description:
 #   This is a scaffold for new tools in the Kali Toolbox.
 #   It includes standard metadata, usage block, and modular flags.
@@ -18,8 +21,8 @@
 # End Help
 
 # ─── Config ──────────────────────────────────────────────────
-TOOL_NAME="tool-template"
-VERSION="0.1-dev"
+#TOOL_NAME="tool-template"
+#VERSION="0.1-dev"
 DRY_RUN=false
 VERBOSE=false
 
