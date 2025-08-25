@@ -1,16 +1,19 @@
 #!/bin/bash
-# ┌─────────────────────────────────────────────────------┐
+# ┌───────────────────────────────────────────────────────┐
 # │ Type / Version : bash / 1.0.0.0-live                  │
 # │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
 # │ Script Purpose : Update Kali Packages.                │
 # │ Package        : toolbox                              │
-# └──────────────────────────────────────────────--------─┘
+# └───────────────────────────────────────────────────────┘
+# 
 # Usage:
 #   tool-update [--dry-run] [--log] [--hashmap]
+# 
 # Examples:
 #   tool-update --dry-run
 #   tool-update --log
 #   tool-update --hashmap
+# 
 # Description:
 #   Updates Kali packages using apt update, upgrade, autoremove, and clean.
 #   Supports dry-run simulation, logging to /var/log/tool-update.log,
