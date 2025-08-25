@@ -5,16 +5,19 @@
 # │ Script Purpose : Toolbox Index                        │
 # │ Package        : toolbox                              │
 # └───────────────────────────────────────────────------──┘
+#
 # Usage:
 #   tool-box [<tool-name>]
+#
 # Examples:
 #   tool-box
 #   tool-box tool-diag
 #   tool-box tool-update
+#
 # Description:
 #   Lists all available tools in the Kali Toolbox with version info.
 #   If a tool name is provided, displays its embedded help block.
-#   Parses help blocks using (# Usage:) to (# End Help) comment markers.
+#   Parses help blocks using comment markers.
 # End Help
 
 TOOL_DIR="/usr/local/bin"
@@ -35,11 +38,7 @@ if [ -z "$1" ]; then
 else
   target="$TOOL_DIR/$1"
   if [ -f "$target" ]; then
-    awk '/┌/,/┘/' "$target"
-    echo -e "\nUsage Guide:"
-    awk '/^# Usage:/,/^# Examples:/' "$target" | sed 's/^# //'
-    echo -e "\nExamples:"
-    awk '/^# Examples:/,/^# End Help/' "$target" | sed 's/^# //'
+    awk '/^# ┌/,/^# End Help/' "$target" | sed 's/^# //'
   else
     echo "Tool '$1' not found in $TOOL_DIR."
   fi
