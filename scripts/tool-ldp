@@ -5,8 +5,10 @@
 # │ Script Purpose : Linux Desktop Launcher               │
 # │ Package        : toolbox                              │
 # └───────────────────────────────────────────────------──┘
+# 
 # Usage:
 #   tool-ldp
+# 
 # Description:
 #   Launches a Linux desktop session with X11 rendering, D-Bus setup,
 #   ICE socket fix, and session lock cleanup. Designed for local use
