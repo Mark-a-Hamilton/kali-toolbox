@@ -1,16 +1,21 @@
 #!/bin/bash
-# ┌────────────────────────────────────────────────------─┐
+# ┌───────────────────────────────────────────────────────┐
 # │ Type / Version : bash / 1.0.0.0-live                  │
 # │ Author         : Mark Hamilton │ Co-Pilot AI assisted │
 # │ Script Purpose : System maintenance & hygiene         │
 # │ Package        : toolbox                              │
-# └────────────────────────────────────────────────------─┘
+# └───────────────────────────────────────────────────────┘
+# 
 # Usage:
 # tool-cleanup [--dry-run] [--verbose] [--log] [--hashmap]
+# 
 # Examples:
 # tool-cleanup --dry-run
 # tool-cleanup --log
 # tool-cleanup --hashmap
+# 
+# Description:
+# Cleans up unrequired files from the installation which can be expanded as required. 
 # End Help
 
 set -e
